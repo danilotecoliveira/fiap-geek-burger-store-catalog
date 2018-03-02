@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
+using GeekBurger.StoreCatalog.Entities;
 
 namespace GeekBurger.StoreCatalog.WebApi.Controllers
 {
@@ -7,16 +8,28 @@ namespace GeekBurger.StoreCatalog.WebApi.Controllers
     public class CatalogController : Controller
     {
         /// <summary>
-        /// Register a new user on application
+        /// Description
         /// </summary>
-        /// <param name="user">New user to register</param>
-        /// <remarks>Adds new user to application and grant access</remarks>
-        /// <response code="400">Bad Request</response>
-        /// <response code="500">Internal Server Error</response>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
-        public IActionResult GetCatalogs(Guid id)
+        public IActionResult GetCatalogs(string id)
         {
-            return Ok();
+            var result = new OperationResult<object>();
+
+            try
+            {
+                result.Data = new { id = Guid.Parse(id).ToString() };
+                result.Success = true;
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+
+                return BadRequest(result);
+            }
         }
     }
 }

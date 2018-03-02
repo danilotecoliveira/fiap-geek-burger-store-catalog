@@ -12,7 +12,8 @@ namespace GeekBurger.StoreCatalog.WebApi
             var mvcCoreBuilder = services.AddMvcCore();
             mvcCoreBuilder
                 .AddFormatterMappings()
-                .AddJsonFormatters()                .AddCors();
+                .AddJsonFormatters()
+                .AddCors();
 
             services.AddMvcCore()
                 .AddApiExplorer();
@@ -33,7 +34,7 @@ namespace GeekBurger.StoreCatalog.WebApi
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Geek Burger Store Catalog");
             });
 
             app.UseMvc();
