@@ -14,9 +14,12 @@ namespace GeekBurger.StoreCatalog.WebApi
                 .AddFormatterMappings()
                 .AddJsonFormatters()                .AddCors();
 
+            services.AddMvcCore()
+                .AddApiExplorer();
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "Geek Burger Store Catalog", Version = "v1" });
             });
         }
 
