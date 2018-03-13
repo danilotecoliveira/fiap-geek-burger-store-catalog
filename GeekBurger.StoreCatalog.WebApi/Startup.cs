@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.Extensions.DependencyInjection;
+using GeekBurger.StoreCatalog.WebApi.Controllers;
 
 namespace GeekBurger.StoreCatalog.WebApi
 {
@@ -15,13 +16,14 @@ namespace GeekBurger.StoreCatalog.WebApi
                 .AddJsonFormatters()
                 .AddCors();
 
-            services.AddMvcCore()
-                .AddApiExplorer();
+            services.AddMvcCore().AddApiExplorer();
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Geek Burger Store Catalog", Version = "v1" });
             });
+
+            services.AddSingleton(a => StoreController.GetAreas());
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
