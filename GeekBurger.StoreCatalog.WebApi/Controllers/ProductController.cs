@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using GeekBurger.StoreCatalog.Entities;
-using GeekBurger.StoreCatalog.Core;
 using GeekBurger.StoreCatalog.Core.Interfaces;
 
 namespace GeekBurger.StoreCatalog.WebApi.Controllers
@@ -11,13 +10,24 @@ namespace GeekBurger.StoreCatalog.WebApi.Controllers
     {
         private IProductCore _productCore;
 
+        public ProductController(IProductCore productCore)
+        {
+            _productCore = productCore;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        [HttpGet("products/{user}")]
-        public IActionResult GetProducts(User user)
+        /// <summary>
+        /// Return all products for user with restrictions
+        /// </summary>
+        /// <param name="user">User with restrictions</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("products/{user}")]
+        public IActionResult GetProducts([FromBody] User user)
         {
             var result = new OperationResult<IEnumerable<Product>>();
 

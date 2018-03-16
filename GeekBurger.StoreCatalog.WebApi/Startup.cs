@@ -42,6 +42,7 @@ namespace GeekBurger.StoreCatalog.WebApi
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
+                c.InjectStylesheet("/Content/site.css");
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Geek Burger Store Catalog");
             });
 
