@@ -23,7 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GeekBurger.StoreCatalog.Core\GeekBurger.StoreCatalog.Core.csproj" />
     <ProjectReference Include="..\GeekBurger.StoreCatalog.Entities\GeekBurger.StoreCatalog.Entities.csproj" />
+    <ProjectReference Include="..\GeekBurger.StoreCatalog.Repositories\GeekBurger.StoreCatalog.Infra.csproj" />
   </ItemGroup>
 
 </Project>
