@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
-using GeekBurger.StoreCatalog.Entities;
+using GeekBurger.StoreCatalog.Contract;
+using System;
+using System.Text;
 
 namespace GeekBurger.StoreCatalog.Infra.Interfaces
 {

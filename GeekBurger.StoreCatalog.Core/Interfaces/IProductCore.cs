@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using GeekBurger.StoreCatalog.Entities;
+using GeekBurger.StoreCatalog.Contract;
 
 namespace GeekBurger.StoreCatalog.Core.Interfaces
 {

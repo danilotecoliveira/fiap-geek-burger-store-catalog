@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using GeekBurger.StoreCatalog.Entities;
+﻿using GeekBurger.StoreCatalog.Contract;
 using GeekBurger.StoreCatalog.Infra.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace GeekBurger.StoreCatalog.Infra.Repositories
 {

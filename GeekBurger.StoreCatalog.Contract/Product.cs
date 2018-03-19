@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace GeekBurger.StoreCatalog.Entities
+namespace GeekBurger.StoreCatalog.Contract
 {
     public class Product
     {

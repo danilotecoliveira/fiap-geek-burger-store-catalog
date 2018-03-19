@@ -1,23 +1,25 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using GeekBurger.StoreCatalog.Entities;
+using GeekBurger.StoreCatalog.Contract;
 using GeekBurger.StoreCatalog.Core.Interfaces;
 
-namespace GeekBurger.StoreCatalog.WebApi.Controllers
+namespace GeekBurger.StoreCatalog.Controllers
 {
+    /// <summary>
+    /// Products endpoints
+    /// </summary>
     public class ProductController : Controller
     {
         private IProductCore _productCore;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="productCore"></param>
         public ProductController(IProductCore productCore)
         {
             _productCore = productCore;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
         }
 
         /// <summary>

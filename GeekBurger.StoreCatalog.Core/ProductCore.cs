@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using GeekBurger.StoreCatalog.Entities;
+using GeekBurger.StoreCatalog.Contract;
 using GeekBurger.StoreCatalog.Core.Interfaces;
 using GeekBurger.StoreCatalog.Infra.Interfaces;
 
