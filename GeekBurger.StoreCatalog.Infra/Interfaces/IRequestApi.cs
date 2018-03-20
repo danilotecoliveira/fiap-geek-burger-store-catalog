@@ -8,6 +8,6 @@ namespace GeekBurger.StoreCatalog.Infra.Interfaces
         // GET : production/areas return 200 areas
         HttpResponseMessage GetAreas();
         // GET : products/{storeId} return 200 products
-        HttpResponseMessage GetProducts(Guid storeId);
+        HttpResponseMessage GetProducts(string restrictions);
     }
 }
