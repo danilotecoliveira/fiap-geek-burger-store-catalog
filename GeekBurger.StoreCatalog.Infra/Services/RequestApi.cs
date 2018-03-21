@@ -9,7 +9,13 @@ namespace GeekBurger.StoreCatalog.Infra.Services
     {
         public HttpResponseMessage GetAreas()
         {
-            throw new NotImplementedException();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                return client.GetAsync("").Result;
+            }
         }
 
         public HttpResponseMessage GetProducts(string restrictions)
