@@ -1,9 +1,10 @@
 ﻿using GeekBurger.StoreCatalog.Contract;
+using GeekBurger.StoreCatalog.Infra.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace GeekBurger.StoreCatalog.Infra.Repositories
 {
-    public class StoreCatalogDbContext : DbContext
+    public class StoreCatalogDbContext : DbContext, IDbContext
     {
         public StoreCatalogDbContext(DbContextOptions<StoreCatalogDbContext> options)
             : base (options)
@@ -25,8 +26,18 @@ namespace GeekBurger.StoreCatalog.Infra.Repositories
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"");
+                optionsBuilder.UseSqlServer(@"Server=yourservername;Database=ContactDB;User Id=youruserid;Password=yourpassword;Trusted_Connection=True;");
             }
+        }
+
+        public new DbSet<TEntity> Set<TEntity>() where TEntity : class
+        {
+            return base.Set<TEntity>();
+        }
+
+        public new void SaveChanges()
+        {
+            base.SaveChanges();
         }
     }
 }

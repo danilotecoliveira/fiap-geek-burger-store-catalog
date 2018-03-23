@@ -4,22 +4,35 @@ using System.Collections.Generic;
 using GeekBurger.StoreCatalog.Contract;
 using GeekBurger.StoreCatalog.Core.Interfaces;
 using GeekBurger.StoreCatalog.Infra.Interfaces;
+using Newtonsoft.Json;
 
 namespace GeekBurger.StoreCatalog.Core
 {
     public class ProductCore : IProductCore
     {
-        private IProducts _products;
+        private readonly IRequestApi _requestApi;
+        private readonly IRepository<ProductionArea> _repository;
 
-        public ProductCore(IProducts products)
+        public ProductCore(IRequestApi requestApi, IRepository<ProductionArea> repository)
         {
-            _products = products;
+            _requestApi = requestApi;
+            _repository = repository;
         }
 
-        public IEnumerable<Product> GetAllProductsAvaliables()
+        public List<Product> GetProductsFromUser(User user)
         {
-            var products = _products.GetAll();
-            return products.ToList().Where(m => m.StoreId == Guid.Parse("8048e9ec-80fe-4bad-bc2a-e4f4a75c834e"));
+            var restrictions = String.Join(",", user.Restrictions);
+            var responseProducts = _requestApi.GetProducts(restrictions);
+
+            if(responseProducts.IsSuccessStatusCode)
+            {
+                var jsonProduct = responseProducts.Content.ReadAsStringAsync().Result;
+                var products = JsonConvert.DeserializeObject<List<Product>>(jsonProduct);
+
+                var productionAreas = _repository.GetAll();
+                //var result = productionAreas.Where(x => user.Restrictions.ToList().Contains(x.Restrictions)).ToList();
+            }
+            throw new Exception("");
         }
     }
 }

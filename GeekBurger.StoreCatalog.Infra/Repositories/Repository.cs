@@ -1,5 +1,8 @@
 ﻿using GeekBurger.StoreCatalog.Infra.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GeekBurger.StoreCatalog.Infra.Repositories
 {
@@ -14,28 +17,38 @@ namespace GeekBurger.StoreCatalog.Infra.Repositories
 
         public T GetById(int id)
         {
-            throw new System.NotImplementedException();
+            return _context.Set<T>().Find(id);
         }
 
         public List<T> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _context.Set<T>().ToList();
         }
 
         public void Insert(T entity)
         {
-            throw new System.NotImplementedException();
+            if(entity == null)
+                throw new ArgumentNullException("entity");
+
+            _context.Set<T>().Add(entity);
+            _context.SaveChanges();
         }
 
         public void Update(T entity)
         {
-            throw new System.NotImplementedException();
+            if (entity == null)
+                throw new ArgumentNullException("entity");
+
+            _context.SaveChanges();
         }
 
         public void Delete(T entity)
         {
-            throw new System.NotImplementedException();
-        }
+            if (entity == null)
+                throw new ArgumentNullException("entity");
 
+            _context.Set<T>().Remove(entity);
+            _context.SaveChanges();
+        }
     }
 }

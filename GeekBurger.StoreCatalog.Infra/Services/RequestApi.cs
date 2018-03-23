@@ -7,7 +7,29 @@ namespace GeekBurger.StoreCatalog.Infra.Services
 {
     public class RequestApi : IRequestApi
     {
-        public HttpResponseMessage GetAreas()
+        public HttpResponseMessage GetStatusProductionAreas()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                return client.GetAsync("").Result;
+            }
+        }
+
+        public HttpResponseMessage GetProductionAreas()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                return client.GetAsync("").Result;
+            }
+        }
+
+        public HttpResponseMessage GetStatusProducts()
         {
             using (HttpClient client = new HttpClient())
             {

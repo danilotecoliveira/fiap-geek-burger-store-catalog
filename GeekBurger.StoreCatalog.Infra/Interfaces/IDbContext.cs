@@ -1,15 +1,11 @@
-﻿using GeekBurger.StoreCatalog.Contract;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace GeekBurger.StoreCatalog.Infra.Interfaces
 {
     public interface IDbContext
     {
-        DbSet<ProductionArea> ProductionsAreas { get; set; }
-        void OnModelCreating(ModelBuilder modelBuilder);
-        void OnConfiguring(DbContextOptionsBuilder optionsBuilder);
+        DbSet<TEntity> Set<TEntity>() where TEntity : class;
+
+        int SaveChanges();
     }
 }
