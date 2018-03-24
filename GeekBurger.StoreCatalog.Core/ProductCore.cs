@@ -11,9 +11,9 @@ namespace GeekBurger.StoreCatalog.Core
     public class ProductCore : IProductCore
     {
         private readonly IRequestApi _requestApi;
-        private readonly IRepository<ProductionArea> _repository;
+        private readonly IRepository<ProductionAreasCore> _repository;
 
-        public ProductCore(IRequestApi requestApi, IRepository<ProductionArea> repository)
+        public ProductCore(IRequestApi requestApi, IRepository<ProductionAreasCore> repository)
         {
             _requestApi = requestApi;
             _repository = repository;
@@ -31,8 +31,13 @@ namespace GeekBurger.StoreCatalog.Core
 
                 var productionAreas = _repository.GetAll();
                 //var result = productionAreas.Where(x => user.Restrictions.ToList().Contains(x.Restrictions)).ToList();
+
+                return products;
             }
-            throw new Exception("");
+            else
+            {
+                throw new Exception("");
+            }
         }
     }
 }

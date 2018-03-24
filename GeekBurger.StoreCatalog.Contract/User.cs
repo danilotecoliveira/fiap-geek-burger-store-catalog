@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GeekBurger.StoreCatalog.Contract
 {
@@ -8,6 +6,6 @@ namespace GeekBurger.StoreCatalog.Contract
     {
         public Guid UserId { get; set; }
         public string Name { get; set; }
-        public IEnumerable<string> Restrictions { get; set; }
+        public string[] Restrictions { get; set; }
     }
 }
