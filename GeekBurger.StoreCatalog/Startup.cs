@@ -14,25 +14,35 @@ using GeekBurger.StoreCatalog.Core;
 
 namespace GeekBurger.StoreCatalog
 {
+    /// <summary>
+    /// Startup project
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Startup constructor
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Startup global configuration
+        /// </summary>
         public IConfiguration Configuration { get; }
 
+        /// <summary>
+        /// Startup configure services
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<StoreCatalogDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("StoreCatalog")));
-
-            //Infra
             services.AddTransient<IDbContext, StoreCatalogDbContext>();
             services.AddTransient<IRequestApi, RequestApi>();
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-
-            //Core
             services.AddTransient<IProductCore, ProductCore>();
             services.AddTransient<IProductionAreasCore, ProductionAreasCore>();
 
@@ -59,6 +69,11 @@ namespace GeekBurger.StoreCatalog
             });
         }
 
+        /// <summary>
+        /// Startup configure
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

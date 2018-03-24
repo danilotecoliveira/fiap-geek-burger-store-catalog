@@ -5,11 +5,4 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="GeekBurger.Ingredients.Contracts" Version="1.0.0" />
-    <PackageReference Include="GeekBurger.Production.Contract" Version="1.1.0" />
-    <PackageReference Include="GeekBurger.Products.Contract" Version="3.0.0" />
-    <PackageReference Include="GeekBurger.Users.Contract" Version="2.0.0" />
-  </ItemGroup>
-
 </Project>

@@ -1,53 +1,61 @@
-﻿using GeekBurger.StoreCatalog.Infra.Interfaces;
-using System;
+﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Net.Http.Headers;
+using GeekBurger.StoreCatalog.Infra.Interfaces;
 
 namespace GeekBurger.StoreCatalog.Infra.Services
 {
     public class RequestApi : IRequestApi
     {
-        public HttpResponseMessage GetStatusProductionAreas()
+        HttpClient _client;
+
+        public RequestApi()
         {
-            using (HttpClient client = new HttpClient())
+            _client = new HttpClient
+            {
+                BaseAddress = new Uri("https://geekburger-ingredients.azurewebsites.net/")
+            };
+        }
+
+        public Task<HttpResponseMessage> GetStatusProductionAreas()
+        {
+            using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                return client.GetAsync("").Result;
+                return client.GetAsync("");
             }
         }
 
-        public HttpResponseMessage GetProductionAreas()
+        public Task<HttpResponseMessage> GetProductionAreas()
         {
-            using (HttpClient client = new HttpClient())
+            using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                return client.GetAsync("").Result;
+                return client.GetAsync("");
             }
         }
 
-        public HttpResponseMessage GetStatusProducts()
+        public Task<HttpResponseMessage> GetStatusProducts()
         {
-            using (HttpClient client = new HttpClient())
+            using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                return client.GetAsync("").Result;
+                return client.GetAsync("");
             }
         }
 
-        public HttpResponseMessage GetProducts(string restrictions)
+        public Task<HttpResponseMessage> GetProducts(string restrictions)
         {
-            using (HttpClient client = new HttpClient())
+            using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://geekburger-ingredients.azurewebsites.net/");
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                return client.GetAsync("ingredients/products/" + restrictions).Result;
+                return _client.GetAsync($"ingredients/products/{restrictions}");
             }
         }
     }

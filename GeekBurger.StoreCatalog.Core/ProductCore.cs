@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Linq;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using GeekBurger.StoreCatalog.Contract;
 using GeekBurger.StoreCatalog.Core.Interfaces;
 using GeekBurger.StoreCatalog.Infra.Interfaces;
-using Newtonsoft.Json;
 
 namespace GeekBurger.StoreCatalog.Core
 {
@@ -22,7 +21,7 @@ namespace GeekBurger.StoreCatalog.Core
         public List<Product> GetProductsFromUser(User user)
         {
             var restrictions = String.Join(",", user.Restrictions);
-            var responseProducts = _requestApi.GetProducts(restrictions);
+            var responseProducts = _requestApi.GetProducts(restrictions).GetAwaiter().GetResult();
 
             if(responseProducts.IsSuccessStatusCode)
             {
@@ -36,7 +35,7 @@ namespace GeekBurger.StoreCatalog.Core
             }
             else
             {
-                throw new Exception("");
+                throw new Exception($"Status code error: {responseProducts.StatusCode}");
             }
         }
     }

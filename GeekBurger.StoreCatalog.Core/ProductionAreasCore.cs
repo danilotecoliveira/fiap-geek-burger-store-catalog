@@ -18,9 +18,11 @@ namespace GeekBurger.StoreCatalog.Core
             _requestApi = requestApi;
             _repository = repository;
         }
+
         public void SaveAllProductionArea()
         {
-            var responseProductionsAreas = _requestApi.GetProductionAreas();
+            var responseProductionsAreas = _requestApi.GetProductionAreas().GetAwaiter().GetResult();
+
             if(responseProductionsAreas.IsSuccessStatusCode)
             {
                 var jsonProductionAreas = responseProductionsAreas.Content.ReadAsStringAsync().Result;
@@ -44,7 +46,7 @@ namespace GeekBurger.StoreCatalog.Core
             }
             else
             {
-                throw new Exception("");
+                throw new Exception($"Status code error: {responseProductionsAreas.StatusCode}");
             }
         }
     }
