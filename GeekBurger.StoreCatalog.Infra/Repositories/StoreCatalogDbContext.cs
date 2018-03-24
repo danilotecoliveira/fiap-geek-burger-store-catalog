@@ -12,14 +12,14 @@ namespace GeekBurger.StoreCatalog.Infra.Repositories
 
         }
 
-        public DbSet<ProductionArea> ProductionsAreas { get; set; }
+        public DbSet<ProductionAreas> ProductionsAreas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProductionArea>().ToTable("ProductionsAreas");
-            modelBuilder.Entity<ProductionArea>().HasKey(x => x.ProductionAreaId);
-            modelBuilder.Entity<ProductionArea>().Property(x => x.Name).HasMaxLength(100).IsRequired();
-            modelBuilder.Entity<ProductionArea>().Property(x => x.Status).IsRequired();
+            modelBuilder.Entity<ProductionAreas>().ToTable("ProductionsAreas");
+            modelBuilder.Entity<ProductionAreas>().HasKey(x => x.ProductionAreaId);
+            modelBuilder.Entity<ProductionAreas>().Property(x => x.Name).HasMaxLength(100).IsRequired();
+            modelBuilder.Entity<ProductionAreas>().Property(x => x.Status).IsRequired();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
