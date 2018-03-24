@@ -5,6 +5,6 @@ namespace GeekBurger.StoreCatalog.Core.Interfaces
 {
     public interface IProductCore
     {
-        IEnumerable<Product> GetAllProductsAvaliables();
+        List<Product> GetProductsFromUser(User user);
     }
 }

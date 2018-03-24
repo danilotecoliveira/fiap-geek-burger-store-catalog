@@ -43,7 +43,6 @@ namespace GeekBurger.StoreCatalog.Controllers
 
                 // retorna os produtos
 
-                result.Data = _productCore.GetAllProductsAvaliables();
                 result.Success = true;
                 return Ok(result);
             }
