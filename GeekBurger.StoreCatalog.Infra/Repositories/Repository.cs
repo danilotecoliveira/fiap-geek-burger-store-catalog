@@ -1,8 +1,7 @@
-﻿using GeekBurger.StoreCatalog.Infra.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Collections.Generic;
+using GeekBurger.StoreCatalog.Infra.Interfaces;
 
 namespace GeekBurger.StoreCatalog.Infra.Repositories
 {

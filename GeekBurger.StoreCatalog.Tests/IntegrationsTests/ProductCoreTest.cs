@@ -1,7 +1,11 @@
 ﻿using System.Linq;
+using GeekBurger.StoreCatalog.Contract;
 using GeekBurger.StoreCatalog.Core;
 using GeekBurger.StoreCatalog.Core.Interfaces;
+using GeekBurger.StoreCatalog.Infra.Interfaces;
 using GeekBurger.StoreCatalog.Infra.Repositories;
+using GeekBurger.StoreCatalog.Infra.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GeekBurger.StoreCatalog.Tests.IntegrationsTests
@@ -13,16 +17,19 @@ namespace GeekBurger.StoreCatalog.Tests.IntegrationsTests
 
         public ProductCoreTest()
         {
-            //_productCore = new ProductCore(new Products());
+            _productCore = new ProductCore(new RequestApi(), new Repository<ProductionAreasCore>(new StoreCatalogDbContext(new DbContextOptions<StoreCatalogDbContext>())));
         }
 
         [TestMethod]
         public void Check_All_Products_Available()
         {
-            //var result = _productCore.GetAllProductsAvaliables().ToList();
+            var user = new User();
+            user.Restrictions = new string[] { "" };
 
-            //Assert.IsNotNull(result);
-            //Assert.IsTrue(result.Count > 0);
+            var result = _productCore.GetProductsFromUser(user);
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.ToList().Count > 0);
         }
     }
 }
