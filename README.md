@@ -8,10 +8,10 @@ Este projeto trata-se de um micro serviço de classificação de produtos basead
 O Swagger documentado está disponível em http://geekburguerfiapapistorecatalog.azurewebsites.net/swagger/
 
 ### Autores
-* [38930 - Danilo de Oliveira]
-* [45806 - Felipe Colacciopo]
-* [44184 - Marcelo Baptista]
-* [31768 - Marcelo Silva]
-* [31948 - Willian Hilton]
+* 38930 - Danilo de Oliveira
+* 45806 - Felipe Colacciopo
+* 44184 - Marcelo Baptista
+* 31768 - Marcelo Silva
+* 31948 - Willian Hilton
 
 ### Arquitetura
