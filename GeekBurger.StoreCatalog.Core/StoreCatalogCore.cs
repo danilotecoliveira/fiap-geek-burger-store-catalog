@@ -1,19 +1,21 @@
-﻿using System.Net;
+﻿using System.Net.Http;
 using GeekBurger.StoreCatalog.Core.Interfaces;
 
 namespace GeekBurger.StoreCatalog.Core
 {
     public class StoreCatalogCore : IStoreCatalogCore
     {
+        private string _url_1 = "http://www.youtube.com.br/";
+        private string _url_2 = "http://www.uol.com.br/";
+
         public bool StatusServers()
         {
             try
             {
-                var client = new WebClient();
-                string resultUrl1 = client.DownloadString("http://www.youtube.com.br/");
-                string resultUrl2 = client.DownloadString("http://www.uol.com.br/");
-
-                return true;
+                var client = new HttpClient();
+                var result_1 = client.GetAsync(_url_1).GetAwaiter().GetResult();
+                var result_2 = client.GetAsync(_url_2).GetAwaiter().GetResult();
+                return (result_1.IsSuccessStatusCode && result_2.IsSuccessStatusCode);
             }
             catch
             {

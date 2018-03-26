@@ -12,31 +12,48 @@ namespace GeekBurger.StoreCatalog.Controllers
     {
         private IStoreCatalogCore _storeCatalogCore;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="storeCatalogCore"></param>
         public StoreCatalogController(IStoreCatalogCore storeCatalogCore)
         {
             _storeCatalogCore = storeCatalogCore;
         }
 
         /// <summary>
-        /// Return store catalog by Guid identifier
+        /// Check if dependence services are available
         /// </summary>
-        /// <param name="storeid">Guid of store catalog</param>
-        /// <returns></returns>
-        [HttpGet("store/{storeid:Guid}")]
-        public IActionResult GetStore(Guid storeid)
+        /// <response code="200">Returned successfully</response>
+        /// <response code="500">Returned services not available</response>
+        /// <response code="503">Returned internal server error</response>
+        [HttpGet("statusServer/")]
+        public IActionResult GetStatusServer()
         {
             var result = new OperationResult<bool>();
 
             try
             {
-                result.Data = _storeCatalogCore.StatusServers();
+                var response = _storeCatalogCore.StatusServers();
 
-                return Ok(result);
+                if (response)
+                {
+                    result.Success = true;
+                    result.Data = true;
+                    return Ok(result);
+                }                    
+                else
+                {
+                    result.Success = true;
+                    result.Data = false;
+                    result.Message = "Services not available";
+                    return StatusCode(503, result);
+                }
             }
             catch (Exception ex)
             {
                 result.Message = ex.Message;
-                return StatusCode(503, result);
+                return StatusCode(500, result);
             }
         }
     }
