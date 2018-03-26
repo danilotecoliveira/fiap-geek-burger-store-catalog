@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using GeekBurger.StoreCatalog.Contract;
+using GeekBurger.StoreCatalog.Core.Interfaces;
 
 namespace GeekBurger.StoreCatalog.Controllers
 {
@@ -9,29 +10,46 @@ namespace GeekBurger.StoreCatalog.Controllers
     /// </summary>
     public class StoreCatalogController : Controller
     {
+        private IStoreCatalogCore _storeCatalogCore;
+
         /// <summary>
-        /// Return store catalog by Guid identifier
+        /// Constructor
         /// </summary>
-        /// <param name="storeid">Guid of store catalog</param>
-        /// <returns></returns>
-        [HttpGet("store/{storeid:Guid}")]
-        public IActionResult GetStore(Guid storeid)
+        /// <param name="storeCatalogCore"></param>
+        public StoreCatalogController(IStoreCatalogCore storeCatalogCore)
+        {
+            _storeCatalogCore = storeCatalogCore;
+        }
+
+        /// <summary>
+        /// Check if dependence services are available
+        /// </summary>
+        /// <response code="200">Returned successfully</response>
+        /// <response code="500">Returned services not available</response>
+        /// <response code="503">Returned internal server error</response>
+        [HttpGet("statusServer/")]
+        public IActionResult GetStatusServer()
         {
             var result = new OperationResult<bool>();
 
             try
             {
-                // verifica se os outros serviços estão ok
+                result.Data = _storeCatalogCore.StatusServers();
+                result.Success = true;
 
-                // retorna se está on line
-
-                result.Data = true;
-                return Ok(result);
+                if (result.Data)
+                    return Ok(result);
+                else
+                {
+                    result.Message = "Services not available";
+                    return StatusCode(503, result);
+                }
             }
             catch (Exception ex)
             {
+                result.Success = false;
                 result.Message = ex.Message;
-                return StatusCode(503, result);
+                return StatusCode(500, result);
             }
         }
     }

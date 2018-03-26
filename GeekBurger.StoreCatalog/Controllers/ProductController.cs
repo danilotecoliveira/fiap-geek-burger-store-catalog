@@ -25,8 +25,9 @@ namespace GeekBurger.StoreCatalog.Controllers
         /// <summary>
         /// Return all products for user with restrictions
         /// </summary>
-        /// <param name="user">User with restrictions</param>
-        /// <returns></returns>
+        /// <param name="user">Object User with restrictions</param>
+        /// <response code="200">Returned successfully</response>
+        /// <response code="400">Returned bad request</response>
         [HttpGet]
         [Route("products/{user}")]
         public IActionResult GetProducts([FromBody] User user)

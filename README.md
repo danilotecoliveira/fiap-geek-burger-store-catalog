@@ -24,3 +24,10 @@ O Swagger documentado está disponível em http://geekburguerfiapapistorecatalog
 * Tests - Armazena os testes de Integração e de Unidade
 * **IntegrationsTests** - Testas os métodos de forma integrada
 * **UnitTests** - Testas os métodos de forma isolada
+
+### Estrutura dos responses
+Todos os responses estão padronizados dentro do objeto OperationResult. Este objeto foi padronizado para facilitar a serialização e deserialização dos serviços que consomem o Store Catalog. A estrutura do objeto é composta de:
+* Date - Data e hora que o objeto foi criado no servidor
+* Success - Booleano que identifica se a requisição foi feita com sucesso ou não
+* Message - Mensagem da exception caso a requisição tenha falhado
+* Data - Objeto genérico retornado com a requisição

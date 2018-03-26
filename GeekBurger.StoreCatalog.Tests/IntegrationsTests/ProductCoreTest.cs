@@ -1,11 +1,10 @@
 ﻿using System.Linq;
-using GeekBurger.StoreCatalog.Contract;
-using GeekBurger.StoreCatalog.Core;
-using GeekBurger.StoreCatalog.Core.Interfaces;
-using GeekBurger.StoreCatalog.Infra.Interfaces;
-using GeekBurger.StoreCatalog.Infra.Repositories;
-using GeekBurger.StoreCatalog.Infra.Services;
 using Microsoft.EntityFrameworkCore;
+using GeekBurger.StoreCatalog.Core;
+using GeekBurger.StoreCatalog.Contract;
+using GeekBurger.StoreCatalog.Infra.Services;
+using GeekBurger.StoreCatalog.Core.Interfaces;
+using GeekBurger.StoreCatalog.Infra.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GeekBurger.StoreCatalog.Tests.IntegrationsTests
@@ -15,7 +14,8 @@ namespace GeekBurger.StoreCatalog.Tests.IntegrationsTests
     {
         private IProductCore _productCore;
 
-        public ProductCoreTest()
+        [TestInitialize]
+        public void Setup()
         {
             _productCore = new ProductCore(new RequestApi(), new Repository<ProductionAreasCore>(new StoreCatalogDbContext(new DbContextOptions<StoreCatalogDbContext>())));
         }
