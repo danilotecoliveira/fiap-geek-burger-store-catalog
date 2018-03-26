@@ -5,13 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using GeekBurger.Production.Contract;
+using Newtonsoft.Json;
+using GeekBurger.StoreCatalog.Infra.Interfaces;
+using GeekBurger.StoreCatalog.Contract;
 
 namespace GeekBurger.StoreCatalog.ServiceBus
 {
     public class ReceiveMessage
     {
+        private static IRepository<ProductionAreas> _repository;
+
         public ReceiveMessage() => ReceberMensagemAsync();
 
+        public ReceiveMessage(IRepository<ProductionAreas> repository)
+        {
+            _repository = repository;
+        }
 
         const string ServiceBusConnectionString = "Endpoint=sb://geekburger.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=VrwaCn+4NbZkDFguQNGDCu2cMQ7IXyjOPLMto0HuE8Q=";
         //const string TopicName = "storecatalog";
@@ -53,6 +63,22 @@ namespace GeekBurger.StoreCatalog.ServiceBus
         private static async Task ProcessMessagesAsync(Message message, CancellationToken token)
         {
             string teste = Encoding.UTF8.GetString(message.Body);
+
+            ProductionAreaChangedMessage areaChangedMessage = JsonConvert.DeserializeObject<ProductionAreaChangedMessage>(teste);
+          
+            if(areaChangedMessage.State == ProductionAreaChangedMessage.ProductionAreaState.Added)
+            {
+                _repository.Insert(RetornaAreasDeProducao(areaChangedMessage.ProductionArea));
+            }
+            else if(areaChangedMessage.State == ProductionAreaChangedMessage.ProductionAreaState.Modified)
+            {
+                _repository.Update(RetornaAreasDeProducao(areaChangedMessage.ProductionArea));
+            }
+            else
+            {
+                _repository.Delete(RetornaAreasDeProducao(areaChangedMessage.ProductionArea));
+            }
+
             await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
         }
 
@@ -64,6 +90,17 @@ namespace GeekBurger.StoreCatalog.ServiceBus
         private static Task ExceptionReceivedHandler(ExceptionReceivedEventArgs exceptionReceivedEventArgs)
         {
             return Task.CompletedTask;
+        }
+
+        private static ProductionAreas RetornaAreasDeProducao(ProductionAreaTO productionAreaTO)
+        {
+            return new ProductionAreas()
+            {
+                Name = productionAreaTO.Name,
+                ProductionAreaId = productionAreaTO.Id,
+                Status = productionAreaTO.Status,
+                Restrictions = productionAreaTO.Restrictions.ToArray()
+            };
         }
 
 
