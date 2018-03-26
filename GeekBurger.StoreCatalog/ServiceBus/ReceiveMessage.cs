@@ -13,9 +13,11 @@ namespace GeekBurger.StoreCatalog.ServiceBus
         public ReceiveMessage() => ReceberMensagemAsync();
 
 
-        const string ServiceBusConnectionString = "Endpoint=sb://geekburger.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=VrwaCn+4NbZkDFguQNGDCu2cMQ7IXyjOPLMto0HuE8Q=";       
-        const string TopicName = "storecatalog";
-        const string SubscriptionName = "catalog";
+        const string ServiceBusConnectionString = "Endpoint=sb://geekburger.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=VrwaCn+4NbZkDFguQNGDCu2cMQ7IXyjOPLMto0HuE8Q=";
+        //const string TopicName = "storecatalog";
+        //const string SubscriptionName = "catalog";
+        const string TopicName = "productionareachangedtopic";
+        const string SubscriptionName = "productionarea";
         static ISubscriptionClient subscriptionClient;
 
         /// <summary>
