@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using GeekBurger.StoreCatalog.Contract;
+using GeekBurger.StoreCatalog.Core.Interfaces;
 
 namespace GeekBurger.StoreCatalog.Controllers
 {
@@ -9,6 +10,13 @@ namespace GeekBurger.StoreCatalog.Controllers
     /// </summary>
     public class StoreCatalogController : Controller
     {
+        private IStoreCatalogCore _storeCatalogCore;
+
+        public StoreCatalogController(IStoreCatalogCore storeCatalogCore)
+        {
+            _storeCatalogCore = storeCatalogCore;
+        }
+
         /// <summary>
         /// Return store catalog by Guid identifier
         /// </summary>
@@ -21,11 +29,8 @@ namespace GeekBurger.StoreCatalog.Controllers
 
             try
             {
-                // verifica se os outros serviços estão ok
+                result.Data = _storeCatalogCore.StatusServers();
 
-                // retorna se está on line
-
-                result.Data = true;
                 return Ok(result);
             }
             catch (Exception ex)

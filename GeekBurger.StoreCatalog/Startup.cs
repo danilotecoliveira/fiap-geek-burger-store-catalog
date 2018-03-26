@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.IO;
-using GeekBurger.StoreCatalog.Infra.Repositories;
+using GeekBurger.StoreCatalog.Core;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.Extensions.Configuration;
-using GeekBurger.StoreCatalog.Infra.Interfaces;
+using GeekBurger.StoreCatalog.ServiceBus;
 using GeekBurger.StoreCatalog.Infra.Services;
 using GeekBurger.StoreCatalog.Core.Interfaces;
-using GeekBurger.StoreCatalog.Core;
-using GeekBurger.StoreCatalog.ServiceBus;
+using Microsoft.Extensions.DependencyInjection;
+using GeekBurger.StoreCatalog.Infra.Interfaces;
+using GeekBurger.StoreCatalog.Infra.Repositories;
 
 namespace GeekBurger.StoreCatalog
 {
@@ -46,6 +46,7 @@ namespace GeekBurger.StoreCatalog
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IProductCore, ProductCore>();
             services.AddTransient<IProductionAreasCore, ProductionAreasCore>();
+            services.AddTransient<IStoreCatalogCore, StoreCatalogCore>();
 
             var mvcCoreBuilder = services.AddMvcCore();
             mvcCoreBuilder
