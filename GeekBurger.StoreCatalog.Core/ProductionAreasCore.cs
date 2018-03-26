@@ -25,10 +25,9 @@ namespace GeekBurger.StoreCatalog.Core
 
             if(responseProductionsAreas.IsSuccessStatusCode)
             {
-                var jsonProductionAreas = responseProductionsAreas.Content.ReadAsStringAsync().Result;
-                var productionsAreas = JsonConvert.DeserializeObject<List<ProductionAreas>>(jsonProductionAreas);
+                var productionsAreas = ProductionAreas.GetProductionsAreas(responseProductionsAreas.Content.ReadAsStringAsync().Result);
 
-                foreach(var model in productionsAreas)
+                foreach (var model in productionsAreas)
                 {
                     var listaProductionsAreas = _repository.GetAll();
                     var productionAreas = listaProductionsAreas.FirstOrDefault(x => x.Name == model.Name);

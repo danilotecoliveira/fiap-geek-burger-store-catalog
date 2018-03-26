@@ -11,7 +11,7 @@ namespace GeekBurger.StoreCatalog.Controllers
     /// </summary>
     public class ProductController : Controller
     {
-        private IProductCore _productCore;
+        private readonly IProductCore _productCore;
 
         /// <summary>
         /// Constructor
@@ -36,21 +36,14 @@ namespace GeekBurger.StoreCatalog.Controllers
 
             try
             {
-                // verifica se o usuário tem restrição // get ingredients/{restrictions}/products
-
-                // recebe um status code 200 com os resultados
-
-                // filtra os produtos por restruições e áreas disponíveis
-
-                // retorna os produtos
-
+                result.Data = _productCore.GetProductsFromUser(user);
                 result.Success = true;
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 result.Message = ex.Message;
-
+                result.Success = false;
                 return BadRequest(result);
             }
         }
