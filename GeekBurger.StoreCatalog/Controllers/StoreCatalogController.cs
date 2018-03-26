@@ -34,24 +34,20 @@ namespace GeekBurger.StoreCatalog.Controllers
 
             try
             {
-                var response = _storeCatalogCore.StatusServers();
+                result.Data = _storeCatalogCore.StatusServers();
+                result.Success = true;
 
-                if (response)
-                {
-                    result.Success = true;
-                    result.Data = true;
+                if (result.Data)
                     return Ok(result);
-                }                    
                 else
                 {
-                    result.Success = true;
-                    result.Data = false;
                     result.Message = "Services not available";
                     return StatusCode(503, result);
                 }
             }
             catch (Exception ex)
             {
+                result.Success = false;
                 result.Message = ex.Message;
                 return StatusCode(500, result);
             }
