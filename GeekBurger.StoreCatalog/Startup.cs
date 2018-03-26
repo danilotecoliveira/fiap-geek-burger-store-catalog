@@ -11,6 +11,7 @@ using GeekBurger.StoreCatalog.Infra.Interfaces;
 using GeekBurger.StoreCatalog.Infra.Services;
 using GeekBurger.StoreCatalog.Core.Interfaces;
 using GeekBurger.StoreCatalog.Core;
+using GeekBurger.StoreCatalog.ServiceBus;
 
 namespace GeekBurger.StoreCatalog
 {
@@ -66,8 +67,13 @@ namespace GeekBurger.StoreCatalog
                 var basePath = AppContext.BaseDirectory;
                 var xmlPath = Path.Combine(basePath, "GeekBurger.StoreCatalog.xml");
                 c.IncludeXmlComments(xmlPath);
-            });
+
+                ReceiveMessage receiveMessage = new ReceiveMessage();
+                SendMessage sendMessage = new SendMessage(true); 
+            });         
         }
+
+       
 
         /// <summary>
         /// Startup configure
