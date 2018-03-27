@@ -16,18 +16,7 @@ namespace GeekBurger.StoreCatalog.Infra.Services
             {
                 BaseAddress = new Uri("https://geekburger-ingredients.azurewebsites.net/")
             };
-        }
-
-        public Task<HttpResponseMessage> GetStatusProductionAreas()
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("");
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                return client.GetAsync("");
-            }
-        }
+        }        
 
         public Task<HttpResponseMessage> GetProductionAreas()
         {
@@ -38,18 +27,7 @@ namespace GeekBurger.StoreCatalog.Infra.Services
 
                 return client.GetAsync("");
             }
-        }
-
-        public Task<HttpResponseMessage> GetStatusProducts()
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("");
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                return client.GetAsync("");
-            }
-        }
+        }        
 
         public Task<HttpResponseMessage> GetProducts(string restrictions)
         {

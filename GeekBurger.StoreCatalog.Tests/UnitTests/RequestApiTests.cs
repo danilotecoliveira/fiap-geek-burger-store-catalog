@@ -22,5 +22,13 @@ namespace GeekBurger.StoreCatalog.Tests.UnitTests
 
             Assert.IsTrue(result.IsSuccessStatusCode);
         }
+
+        [TestMethod]
+        public void Check_If_Endpoint_GetAreas_Is_Avaliable()
+        {
+            var result = _requestApi.GetProductionAreas().GetAwaiter().GetResult();
+
+            Assert.IsTrue(result.IsSuccessStatusCode);
+        }
     }
 }
