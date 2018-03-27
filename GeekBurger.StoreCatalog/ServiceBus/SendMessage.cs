@@ -60,7 +60,7 @@ namespace GeekBurger.StoreCatalog.ServiceBus
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        public async Task SendMessagesAsync(Product product)
+        public async Task SendMessagesAsync(ProductsByUserWrapper product)
         {
             try
             {

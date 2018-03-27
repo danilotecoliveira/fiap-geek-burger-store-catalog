@@ -17,7 +17,7 @@ namespace GeekBurger.StoreCatalog.Tests.IntegrationsTests
         [TestInitialize]
         public void Setup()
         {
-            _productCore = new ProductCore(new RequestApi(), new Repository<ProductionAreasCore>(new StoreCatalogDbContext(new DbContextOptions<StoreCatalogDbContext>())));
+            _productCore = new ProductCore(new RequestApi(), new Repository<ProductionAreas>(new StoreCatalogDbContext(new DbContextOptions<StoreCatalogDbContext>())));
         }
 
         [TestMethod]
