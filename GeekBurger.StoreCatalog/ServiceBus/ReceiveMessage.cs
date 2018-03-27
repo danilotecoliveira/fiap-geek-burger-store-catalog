@@ -9,20 +9,26 @@ using GeekBurger.Production.Contract;
 using Newtonsoft.Json;
 using GeekBurger.StoreCatalog.Infra.Interfaces;
 using GeekBurger.StoreCatalog.Contract;
+using GeekBurger.StoreCatalog.Infra.Repositories;
 
 namespace GeekBurger.StoreCatalog.ServiceBus
 {
+    /// <summary>
+    /// Class Receive Message
+    /// </summary>
     public class ReceiveMessage
     {
-        private static IRepository<ProductionAreas> _repository;
+        private readonly IRepository<ProductionAreas> _repository;
 
-        public ReceiveMessage() => ReceberMensagemAsync();
-
-        public ReceiveMessage(IRepository<ProductionAreas> repository)
+        /// <summary>
+        /// Constructor for register task
+        /// </summary>
+        public ReceiveMessage()
         {
-            _repository = repository;
+            ReceberMensagemAsync();
+            _repository = new Repository<ProductionAreas>(new StoreCatalogDbContext(new Microsoft.EntityFrameworkCore.DbContextOptions<StoreCatalogDbContext>()));
         }
-
+       
         const string ServiceBusConnectionString = "Endpoint=sb://geekburger.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=VrwaCn+4NbZkDFguQNGDCu2cMQ7IXyjOPLMto0HuE8Q=";
         //const string TopicName = "storecatalog";
         //const string SubscriptionName = "catalog";
@@ -42,7 +48,7 @@ namespace GeekBurger.StoreCatalog.ServiceBus
         /// <summary>
         /// Método responsável por definir ações de sucesso e err na captura da mensagem
         /// </summary>
-        private static void RegisterOnMessageHandlerAndReceiveMessages()
+        private void RegisterOnMessageHandlerAndReceiveMessages()
         {
             var messageHandlerOptions = new MessageHandlerOptions(ExceptionReceivedHandler)
             {
@@ -50,7 +56,7 @@ namespace GeekBurger.StoreCatalog.ServiceBus
                 AutoComplete = false
             };
 
-            subscriptionClient.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions);
+            subscriptionClient.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions: messageHandlerOptions);
         }
 
 
@@ -60,26 +66,35 @@ namespace GeekBurger.StoreCatalog.ServiceBus
         /// <param name="message"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        private static async Task ProcessMessagesAsync(Message message, CancellationToken token)
+        private async Task ProcessMessagesAsync(Message message, CancellationToken token)
         {
-            string teste = Encoding.UTF8.GetString(message.Body);
+            try
+            {
 
-            ProductionAreaChangedMessage areaChangedMessage = JsonConvert.DeserializeObject<ProductionAreaChangedMessage>(teste);
-          
-            if(areaChangedMessage.State == ProductionAreaChangedMessage.ProductionAreaState.Added)
-            {
-                _repository.Insert(RetornaAreasDeProducao(areaChangedMessage.ProductionArea));
-            }
-            else if(areaChangedMessage.State == ProductionAreaChangedMessage.ProductionAreaState.Modified)
-            {
-                _repository.Update(RetornaAreasDeProducao(areaChangedMessage.ProductionArea));
-            }
-            else
-            {
-                _repository.Delete(RetornaAreasDeProducao(areaChangedMessage.ProductionArea));
-            }
+                string teste = Encoding.UTF8.GetString(message.Body);
 
-            await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
+                ProductionAreaChangedMessage areaChangedMessage = JsonConvert.DeserializeObject<ProductionAreaChangedMessage>(teste);
+
+                if (areaChangedMessage.State == ProductionAreaChangedMessage.ProductionAreaState.Added)
+                {
+                    _repository.Insert(RetornaAreasDeProducao(areaChangedMessage.ProductionArea));
+                }
+                else if (areaChangedMessage.State == ProductionAreaChangedMessage.ProductionAreaState.Modified)
+                {
+                    _repository.Update(RetornaAreasDeProducao(areaChangedMessage.ProductionArea));
+                }
+                else
+                {
+                    _repository.Delete(RetornaAreasDeProducao(areaChangedMessage.ProductionArea));
+                }
+
+                await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         /// <summary>

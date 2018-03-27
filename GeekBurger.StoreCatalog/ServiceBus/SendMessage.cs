@@ -42,7 +42,7 @@ namespace GeekBurger.StoreCatalog.ServiceBus
 
             };
 
-            /*Criação da subscrição no tópico de areas de produção*/
+          /*Criação da subscrição no tópico de areas de produção*/
             await topic.Manager.Inner.Subscriptions.CreateOrUpdateAsync("fiap", "GeekBurger", "productionareachangedtopic", "productionarea", subscriptionInner);
 
             if (topic == null)
