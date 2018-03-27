@@ -74,8 +74,6 @@ namespace GeekBurger.StoreCatalog
             });         
         }
 
-       
-
         /// <summary>
         /// Startup configure
         /// </summary>

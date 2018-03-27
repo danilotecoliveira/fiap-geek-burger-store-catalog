@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using GeekBurger.StoreCatalog.Contract;
 using GeekBurger.StoreCatalog.Core.Interfaces;
@@ -20,15 +19,19 @@ namespace GeekBurger.StoreCatalog.Core
 
         public IEnumerable<Product> GetProductsFromUser(User user)
         {
+            // verifica se o usuário tem restrição // get ingredients/{restrictions}/products
             var restrictions = String.Join(",", user.Restrictions);
             var responseProducts = _requestApi.GetProducts(restrictions).GetAwaiter().GetResult();
 
-            if(responseProducts.IsSuccessStatusCode)
+            // recebe um status code 200 com os resultados
+            if (responseProducts.IsSuccessStatusCode)
             {
+                // filtra os produtos por restruições e áreas disponíveis
                 var products = Product.GetProducts(responseProducts.Content.ReadAsStringAsync().Result);
                 var productionAreas = _repository.GetAll();
                 //var result = productionAreas.Where(x => user.Restrictions.ToList().Contains(x.Restrictions)).ToList();
 
+                // retorna os produtos
                 return products;
             }
             else
